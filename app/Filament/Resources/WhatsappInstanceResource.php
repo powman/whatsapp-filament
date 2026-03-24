@@ -12,7 +12,6 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use GuzzleHttp\Exception\GuzzleException;
@@ -78,21 +77,23 @@ class WhatsappInstanceResource extends Resource
                     ->placeholder('Não conectado')
                     ->searchable(),
 
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
-                    ->colors([
-                        'success' => 'connected',
-                        'danger' => 'disconnected',
-                        'warning' => 'qr_code',
-                        'info' => 'connecting',
-                        'gray' => 'unknown',
-                    ])
-                    ->icons([
-                        'heroicon-o-check-circle' => 'connected',
-                        'heroicon-o-x-circle' => 'disconnected',
-                        'heroicon-o-qr-code' => 'qr_code',
-                        'heroicon-o-arrow-path' => 'connecting',
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'connected' => 'success',
+                        'disconnected' => 'danger',
+                        'qr_code' => 'warning',
+                        'connecting' => 'info',
+                        default => 'gray',
+                    })
+                    ->icon(fn (string $state): string => match ($state) {
+                        'connected' => 'heroicon-o-check-circle',
+                        'disconnected' => 'heroicon-o-x-circle',
+                        'qr_code' => 'heroicon-o-qr-code',
+                        'connecting' => 'heroicon-o-arrow-path',
+                        default => '',
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'connected' => 'Conectado',
                         'disconnected' => 'Desconectado',
