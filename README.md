@@ -62,16 +62,64 @@ app/
 
 ## 🚀 Instalação
 
-### Pré-requisitos
+### 🐳 Docker (recomendado)
 
-- PHP 8.2+
-- Composer
-- MySQL 8.0+
-- Redis
-- Node.js 20+ / npm
-- Evolution API rodando
+**Pré-requisito:** Docker 24+ e Docker Compose v2.
 
-### Passos
+```bash
+# 1. Clone o repositório
+git clone https://github.com/powman/whatsapp-filament.git
+cd whatsapp-filament
+
+# 2. Copie o arquivo de configuração Docker
+cp .env.docker .env
+
+# 3. Gere a chave da aplicação
+docker compose run --rm app php artisan key:generate --show
+# Cole o valor gerado em APP_KEY no seu .env
+
+# 4. Ajuste as variáveis de ambiente no .env
+#    EVOLUTION_API_BASE_URL, EVOLUTION_API_KEY, WEBHOOK_SECRET
+
+# 5. Suba todos os serviços (build + start)
+docker compose up -d --build
+
+# 6. (Opcional) Execute o seeder para criar um usuário demo
+docker compose exec app php artisan db:seed
+```
+
+A aplicação ficará disponível em **http://localhost:8000**.
+
+> **Serviços iniciados pelo Docker Compose:**
+> | Serviço | Descrição | Porta |
+> |---------|-----------|-------|
+> | `app` | PHP 8.2-FPM (Laravel) | interno |
+> | `nginx` | Web server | 8000 |
+> | `mysql` | MySQL 8.0 | interno |
+> | `redis` | Cache / Filas | interno |
+> | `queue` | Laravel Queue Worker | — |
+
+#### Comandos úteis
+
+```bash
+# Ver logs
+docker compose logs -f app
+
+# Executar artisan
+docker compose exec app php artisan <comando>
+
+# Parar os serviços
+docker compose down
+
+# Parar e remover volumes (limpa banco de dados)
+docker compose down -v
+```
+
+---
+
+### 💻 Instalação local (manual)
+
+**Pré-requisitos:** PHP 8.2+, Composer, MySQL 8.0+, Redis, Node.js 20+ / npm, Evolution API rodando.
 
 ```bash
 # 1. Clone o repositório

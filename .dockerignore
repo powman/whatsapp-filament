@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+vendor
+public/hot
+public/storage
+storage/*.key
+.env
+.env.*
+!.env.docker
+npm-debug.log
+yarn-error.log
+*.log
+.DS_Store
+Thumbs.db
+docker-compose.override.yml
