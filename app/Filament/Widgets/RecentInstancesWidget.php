@@ -3,7 +3,6 @@
 namespace App\Filament\Widgets;
 
 use App\Models\WhatsappInstance;
-use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
@@ -30,14 +29,16 @@ class RecentInstancesWidget extends BaseWidget
                 TextColumn::make('name')
                     ->label('Nome'),
 
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
-                    ->colors([
-                        'success' => 'connected',
-                        'danger' => 'disconnected',
-                        'warning' => 'qr_code',
-                        'info' => 'connecting',
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'connected' => 'success',
+                        'disconnected' => 'danger',
+                        'qr_code' => 'warning',
+                        'connecting' => 'info',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'connected' => 'Conectado',
                         'disconnected' => 'Desconectado',

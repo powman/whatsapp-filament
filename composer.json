@@ -1,7 +1,7 @@
 {
     "name": "powman/whatsapp-filament",
     "type": "project",
-    "description": "WhatsApp connection management system with FilamentPHP v3 and Evolution API",
+    "description": "WhatsApp connection management system with FilamentPHP v5 and Evolution API",
     "keywords": ["laravel", "filament", "whatsapp", "evolution-api"],
     "license": "MIT",
     "require": {
