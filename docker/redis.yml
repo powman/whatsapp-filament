@@ -1,0 +1,13 @@
+services:
+  redis:
+    image: redis:6.2-alpine
+    container_name: laravel_redis
+    environment:
+      - REDIS_USERNAME=root
+      - REDIS_PASSWORD=FSFS123FFSRvvvgFD
+    restart: always
+    command: /bin/sh -c "redis-server --requirepass FSFS123FFSRvvvgFD"
+    volumes:
+      - ./.cacheredis/.redis:/data/db
+    ports:
+      - '6379:6379'

@@ -1,0 +1,47 @@
+services:
+  nginx:
+    extends:
+      file: ./docker/nginx.yml
+      service: nginx
+    networks:
+      - laravelnet
+  app:
+    extends:
+      file: ./docker/app.yml
+      service: app
+    networks:
+      - laravelnet
+  s3:
+    extends:
+      file: ./docker/s3.yml
+      service: s3
+    networks:
+      - laravelnet
+  mariadb:
+    extends:
+      file: ./docker/mariadb.yml
+      service: mariadb
+    networks:
+      - laravelnet
+  soketi:
+    extends:
+      file: ./docker/soketi.yml
+      service: soketi
+    networks:
+      - laravelnet
+  phpmyadmin:
+    extends:
+      file: ./docker/phpmyadmin.yml
+      service: phpmyadmin
+    networks:
+      - laravelnet
+  redis:
+    extends:
+      file: ./docker/redis.yml
+      service: redis
+    networks:
+      - laravelnet
+
+networks:
+  laravelnet:
+    driver: bridge

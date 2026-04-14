@@ -1,0 +1,18 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: laravel_app
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ..:/app
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini
+    env_file:
+      - ../.env
+    networks:
+      - laravelnet
+    depends_on:
+      - mariadb
+      - redis

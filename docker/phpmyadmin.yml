@@ -1,0 +1,12 @@
+
+services:
+  phpmyadmin:
+    container_name: laravel_phpmyadmin
+    image: phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      UPLOAD_LIMIT: 300M
+    ports:
+      - "8090:80"

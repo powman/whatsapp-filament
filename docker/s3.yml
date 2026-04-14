@@ -1,0 +1,15 @@
+services:
+  s3:
+    container_name: laravel_s3
+    image: minio/minio
+    ports:
+      - "9000:9000"   # API S3
+      - "9090:9090"   # Console Web
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: FSFS123FFSRvvvgFD
+    command: server /data --console-address ":9090"
+    volumes:
+      - ./minio_data:/data
+    restart: always
+    
