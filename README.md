@@ -1,300 +1,58 @@
-# WhatsApp Manager — FilamentPHP + Evolution API
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-Sistema SaaS completo de gerenciamento de conexões WhatsApp com Evolution API, construído em Laravel 11 + FilamentPHP v3 com arquitetura multi-tenant.
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
----
+## About Laravel
 
-## 📋 Visão Geral
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-O **WhatsApp Manager** é uma plataforma SaaS para gerenciar múltiplas instâncias WhatsApp através da [Evolution API](https://doc.evolution-api.com/). Cada empresa (tenant) possui seus dados completamente isolados.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-### Stack
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Backend | PHP 8.2+ / Laravel 11 |
-| Painel Administrativo | FilamentPHP v3 |
-| Banco de Dados | MySQL 8.0+ |
-| Cache/Queue | Redis |
-| API WhatsApp | Evolution API |
-| Frontend | TailwindCSS (via CDN) |
+## Learning Laravel
 
----
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-## 🗂️ Estrutura do Projeto
+In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-```
-app/
-├── DTOs/
-│   ├── EvolutionInstanceDTO.php    # DTO para criação de instância
-│   └── EvolutionMessageDTO.php     # DTO para envio de mensagem
-├── Filament/
-│   ├── Pages/
-│   │   └── Dashboard.php           # Dashboard principal
-│   ├── Resources/
-│   │   └── WhatsappInstanceResource.php  # Resource de instâncias
-│   └── Widgets/
-│       ├── WhatsappStatsWidget.php  # Cards de estatísticas
-│       └── RecentInstancesWidget.php  # Tabela de instâncias recentes
-├── Http/
-│   ├── Controllers/
-│   │   ├── Auth/RegisterController.php   # Registro + criação de tenant
-│   │   ├── WelcomeController.php          # Landing page
-│   │   └── Webhook/WebhookController.php  # Recebe eventos da Evolution API
-│   └── Middleware/
-│       └── TenantMiddleware.php           # Injeta tenant no contexto
-├── Jobs/
-│   └── ProcessWebhookJob.php       # Processa eventos via fila
-├── Models/
-│   ├── Tenant.php                   # Empresa/organização
-│   ├── User.php                     # Usuário com tenant
-│   ├── WhatsappInstance.php         # Instância WhatsApp
-│   └── WebhookLog.php               # Log de webhooks
-├── Providers/
-│   ├── AppServiceProvider.php
-│   └── Filament/AdminPanelProvider.php  # Configuração do painel
-└── Services/
-    ├── EvolutionApiService.php      # Comunicação com Evolution API
-    └── WhatsappInstanceService.php  # Lógica de negócios de instâncias
-```
+You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
 
----
+## Agentic Development
 
-## 🚀 Instalação
-
-### 🐳 Docker (recomendado)
-
-**Pré-requisito:** Docker 24+ e Docker Compose v2.
+Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
 ```bash
-# 1. Clone o repositório
-git clone https://github.com/powman/whatsapp-filament.git
-cd whatsapp-filament
+composer require laravel/boost --dev
 
-# 2. Copie o arquivo de configuração Docker
-cp .env.docker .env
-
-# 3. Gere a chave da aplicação
-docker compose run --rm app php artisan key:generate --show
-# Cole o valor gerado em APP_KEY no seu .env
-
-# 4. Ajuste as variáveis de ambiente no .env
-#    EVOLUTION_API_BASE_URL, EVOLUTION_API_KEY, WEBHOOK_SECRET
-
-# 5. Suba todos os serviços (build + start)
-docker compose up -d --build
-
-# 6. (Opcional) Execute o seeder para criar um usuário demo
-docker compose exec app php artisan db:seed
+php artisan boost:install
 ```
 
-A aplicação ficará disponível em **http://localhost:8000**.
+Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
-> **Serviços iniciados pelo Docker Compose:**
-> | Serviço | Descrição | Porta |
-> |---------|-----------|-------|
-> | `app` | PHP 8.2-FPM (Laravel) | interno |
-> | `nginx` | Web server | 8000 |
-> | `mysql` | MySQL 8.0 | interno |
-> | `redis` | Cache / Filas | interno |
-> | `queue` | Laravel Queue Worker | — |
+## Contributing
 
-#### Comandos úteis
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-```bash
-# Ver logs
-docker compose logs -f app
+## Code of Conduct
 
-# Executar artisan
-docker compose exec app php artisan <comando>
+In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-# Parar os serviços
-docker compose down
+## Security Vulnerabilities
 
-# Parar e remover volumes (limpa banco de dados)
-docker compose down -v
-```
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
----
+## License
 
-### 💻 Instalação local (manual)
-
-**Pré-requisitos:** PHP 8.2+, Composer, MySQL 8.0+, Redis, Node.js 20+ / npm, Evolution API rodando.
-
-```bash
-# 1. Clone o repositório
-git clone https://github.com/powman/whatsapp-filament.git
-cd whatsapp-filament
-
-# 2. Instale as dependências PHP
-composer install
-
-# 3. Copie o arquivo de configuração
-cp .env.example .env
-
-# 4. Gere a chave da aplicação
-php artisan key:generate
-
-# 5. Configure o banco de dados e a Evolution API no .env
-# DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD
-# EVOLUTION_API_BASE_URL, EVOLUTION_API_KEY
-
-# 6. Execute as migrations
-php artisan migrate
-
-# 7. (Opcional) Execute o seeder para criar um usuário demo
-php artisan db:seed
-
-# 8. Instale as dependências JS
-npm install && npm run build
-
-# 9. Configure o storage
-php artisan storage:link
-
-# 10. Inicie o servidor
-php artisan serve
-
-# 11. Inicie o worker de filas (em outro terminal)
-php artisan queue:work
-```
-
----
-
-## ⚙️ Configuração do .env
-
-```env
-# Aplicação
-APP_NAME="WhatsApp Manager"
-APP_URL=http://localhost:8000
-
-# Banco de Dados
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=whatsapp_filament
-DB_USERNAME=root
-DB_PASSWORD=
-
-# Filas (use database ou redis)
-QUEUE_CONNECTION=database
-
-# Cache
-CACHE_DRIVER=redis
-
-# Evolution API
-EVOLUTION_API_BASE_URL=http://localhost:8080
-EVOLUTION_API_KEY=sua-chave-api-aqui
-
-# Webhook Secret
-WEBHOOK_SECRET=seu-secret-aqui
-```
-
----
-
-## 🔧 Funcionalidades
-
-### 1. Landing Page
-- Hero section com apresentação do produto
-- Seção de recursos
-- Como funciona (3 passos)
-- Benefícios
-- CTA para cadastro
-- Layout responsivo com TailwindCSS
-
-### 2. Autenticação e Multi-Tenant
-- Registro cria automaticamente um `Tenant` vinculado ao usuário
-- Cada usuário pertence a um tenant
-- `TenantMiddleware` injeta o tenant no contexto da aplicação
-- Isolamento total de dados via `tenant_id`
-
-### 3. Gerenciamento de Instâncias WhatsApp
-- **Criar**: cria localmente + registra na Evolution API
-- **Listar**: tabela com status em tempo real (badges coloridos)
-- **Conectar**: gera QR Code para escaneamento
-- **Desconectar**: logout da instância
-- **Atualizar Status**: sincroniza com a Evolution API
-- **Excluir**: remove local e da Evolution API
-
-### 4. Dashboard FilamentPHP
-- Widget com total/ativas/desconectadas/aguardando QR
-- Tabela de instâncias recentes
-- Ações rápidas direto na tabela
-
-### 5. Webhooks
-- Endpoint: `POST /api/webhook/{tenantId}`
-- Processamento assíncrono via `ProcessWebhookJob`
-- Log de todos os eventos recebidos
-- Suporte a `CONNECTION_UPDATE` e `QRCODE_UPDATED`
-
-### 6. Integração Evolution API (`EvolutionApiService`)
-```php
-$service = app(EvolutionApiService::class);
-
-// Criar instância
-$service->createInstance($dto);
-
-// Conectar e obter QR Code
-$service->connectInstance($instanceName);
-
-// Desconectar
-$service->disconnectInstance($instanceName);
-
-// Obter status
-$service->getConnectionState($instanceName);
-
-// Enviar mensagem
-$service->sendTextMessage($instanceName, $messageDto);
-```
-
----
-
-## 🏗️ Arquitetura
-
-### Multi-Tenancy
-```
-User → belongsTo → Tenant
-WhatsappInstance → belongsTo → Tenant
-WebhookLog → belongsTo → Tenant
-
-// Todas as queries são filtradas por tenant_id
-WhatsappInstance::where('tenant_id', auth()->user()->tenant_id)->get();
-```
-
-### Service Layer
-```
-Controller/Resource → Service → EvolutionApiService
-                   → Model
-```
-
-### Queue/Jobs
-```
-WebhookController → WebhookLog::create() → ProcessWebhookJob::dispatch()
-                                        → Processa evento
-                                        → Atualiza WhatsappInstance
-```
-
----
-
-## 🔐 Segurança
-
-- Autenticação via Laravel/Filament
-- Proteção por tenant em todas as queries
-- CSRF em formulários web
-- Rate limiting no endpoint de webhook
-- Filas para processar webhooks de forma assíncrona
-
----
-
-## 📦 Dependências Principais
-
-| Pacote | Versão | Uso |
-|--------|--------|-----|
-| `laravel/framework` | ^11.0 | Framework principal |
-| `filament/filament` | ^3.3 | Painel administrativo |
-| `guzzlehttp/guzzle` | ^7.9 | Cliente HTTP para Evolution API |
-
----
-
-## 📄 Licença
-
-MIT License — Livre para uso pessoal e comercial.
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
