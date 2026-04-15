@@ -24,3 +24,4 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 docker/minio_data
+docker/.cachedb

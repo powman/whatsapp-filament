@@ -16,12 +16,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(TeamSeeder::class);
-        $this->call(PostSeeder::class);
 
-        User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'team_id' => 1,
         ]);
+
+        // Associar o usuário ao primeiro time
+        $user->teams()->attach(1);
     }
 }
