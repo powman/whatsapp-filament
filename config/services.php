@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'evolution_api' => [
+        'base_url' => env('EVOLUTION_API_BASE_URL', 'http://localhost:8080'),
+        'global_api_key' => env('EVOLUTION_API_GLOBAL_KEY', ''),
+    ],
+
 ];
